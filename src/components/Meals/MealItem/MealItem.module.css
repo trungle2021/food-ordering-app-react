@@ -1,0 +1,46 @@
+.meal-item{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    border-bottom: 1px solid rgb(229, 229, 229);
+}
+.meal-item-info{
+    text-align: left;
+}
+
+.meal-item-info .description{
+    font-style: italic;
+    font-size: 20px;
+}
+
+.meal-item-info .price{
+    color: #974410;
+    font-size: 25px;
+    font-weight: bold;
+}
+.meal-item-action{
+    display: flex;
+    flex-direction: column;
+}
+
+.meal-item-action .amount-info-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.meal-item-action .amount-item{
+    width: 40px;
+    height: 20px;
+}
+
+.meal-item-action .add-to-cart{
+    background-color: #7F2605;
+    color:white;
+    border-radius: 20px;
+    padding: 0.5rem 3rem;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+}
