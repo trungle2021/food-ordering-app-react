@@ -1,9 +1,25 @@
 .cart-quantity {
-    background-color: #7F2607;
-    text-align: center;
-    width: 30px;
-    border-radius: 10px;
-    padding: 0;
-    border: none;
-    background: none;
+  background-color: #7f2607;
+  text-align: center;
+  width: 30px;
+  border-radius: 10px;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.scale-cart {
+  animation: scaleUp 1s ease-in-out;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
