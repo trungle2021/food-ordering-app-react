@@ -8,6 +8,7 @@ const Input = (props) => {
       className={props.className}
       defaultValue={props.defaultValue}
       value={props.value}
+      readOnly={props.readOnly}
     />
   );
 };
