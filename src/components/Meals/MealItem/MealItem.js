@@ -10,7 +10,7 @@ export default function MealItem(props) {
     const value = parseInt(
       document.getElementById("amount-item-" + props.id).value
     );
-    if (value <= 0) {
+    if (value <= 0 || isNaN(value)) {
       return;
     }
     const newItem = {

@@ -21,6 +21,16 @@ export const CartProvider = (props) => {
     return () => {};
   }, [cartItems]);
 
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setScaleCart(false);
+    }, 500);
+
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, [scaleCart]);
+
   return (
     <CartContext.Provider
       value={{

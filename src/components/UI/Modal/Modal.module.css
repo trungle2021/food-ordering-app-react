@@ -1,0 +1,22 @@
+.modal {
+  position: fixed;
+  z-index: 10000;
+  width: 50%;
+  height: auto;
+  transform: translate(50%) translateY(100%);
+  overflow: auto;
+  background-color: white;
+}
+
+.modal-header {
+}
+
+.modal-content {
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}

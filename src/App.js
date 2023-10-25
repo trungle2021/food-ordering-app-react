@@ -1,17 +1,15 @@
-
-import './App.css';
-import Header from './components/Layout/Header/Header';
-import Meals from './components/Meals/Meals';
-import {CartProvider} from './context/CartContext';
+import "./App.css";
+import Header from "./components/Layout/Header/Header";
+import Meals from "./components/Meals/Meals";
+import { CartProvider } from "./context/CartContext";
 function App() {
-
   return (
-    <div className='App'>
+    <div className="App">
       <CartProvider>
-        <Header/>
-        <Meals/>
+        {/* {open.cartOpen ? <div className="overlay"></div> : ""} */}
+        <Header />
+        <Meals />
       </CartProvider>
-
     </div>
   );
 }
