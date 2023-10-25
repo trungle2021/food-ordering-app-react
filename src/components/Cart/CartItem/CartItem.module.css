@@ -1,0 +1,63 @@
+.meal-item{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    border-bottom: 1px solid rgb(229, 229, 229);
+}
+.meal-item-info{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+.meal-item-info .name{
+    font-size: 30px;
+    font-weight: bold;
+
+}
+.meal-item-info .meal-item-info-price-quantity{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.meal-item-info .meal-item-info-price-quantity  p
+{
+    margin:0 20px 0 0;
+}
+
+.meal-item-info .meal-item-info-price-quantity  .quantity
+{
+    margin:0 0 0 20px;
+}
+
+
+
+.meal-item-info .meal-item-info-price-quantity .quantity{
+    width: 40px;
+    height: 20px;
+}
+
+.meal-item-info .price{
+    color: #974410;
+    font-size: 25px;
+    font-weight: bold;
+}
+.meal-item-action{
+    display: flex;
+}
+
+.meal-item-action .action-button{
+    background-color: white;
+    color:#7F2605;
+    border-radius: 20px;
+    padding: 0.5rem 3rem;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid #7F2605;
+}
+.meal-item-action .action-button:hover{
+    background-color: #7F2605;
+    color:white;
+}
+

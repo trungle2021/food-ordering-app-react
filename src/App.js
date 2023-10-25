@@ -1,7 +1,7 @@
 import "./App.css";
 import Header from "./components/Layout/Header/Header";
 import Meals from "./components/Meals/Meals";
-import { CartProvider } from "./context/CartContext";
+import { CartProvider } from "./store/cart-context";
 function App() {
   return (
     <div className="App">

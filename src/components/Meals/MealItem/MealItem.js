@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Button from "../../UI/Button/Button";
 import styles from "./MealItem.module.css";
 import Input from "../../UI/Input/Input";
-import { CartContext } from "../../../context/CartContext";
+import { CartContext } from "../../../store/cart-context";
 
 export default function MealItem(props) {
   const { cart, scale } = useContext(CartContext);

@@ -7,6 +7,7 @@ const Input = (props) => {
       type={props.type}
       className={props.className}
       defaultValue={props.defaultValue}
+      value={props.value}
     />
   );
 };
