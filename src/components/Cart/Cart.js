@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import styles from "./Cart.module.css";
 import Button from "../UI/Button/Button";
 import { CartContext } from "../../store/cart-context";
@@ -7,10 +7,8 @@ import Card from '../UI/Card/Card';
 import { CartItem } from "./CartItem/CartItem";
 
 export default function Cart({ className }) {
-  const { cart,totalItems, scale } = useContext(CartContext);
+  const { cart,totalPrice,totalItems, scale,isOpen } = useContext(CartContext);
   const scale_animation = scale.scaleCart ? styles[`scale-cart`] : "";
-  const [cartOpen, setCartOpen] = useState(false);
-
   const cartItem = cart.cartItems.map((meal) => {
     return (
       <CartItem
@@ -22,15 +20,17 @@ export default function Cart({ className }) {
       />
     );
   });
- 
-
+  
   const handleOpenCart = () => {
-    setCartOpen(true);
+    isOpen.setCartIsOpen(true);
   };
-
   const handleOverlayClick = () => {
-    setCartOpen(false);
+    isOpen.setCartIsOpen(false);
   };
+  const modalBody = {
+    border:"none",
+    borderBottom: "1px solid black"
+  }
   return (
     <>
       <Button
@@ -41,20 +41,23 @@ export default function Cart({ className }) {
         <p>Your cart</p>
         <p className={styles["cart-quantity"]}>{totalItems}</p>
       </Button>
-      {cartOpen && <Overlay id={`overlay`} onClick={handleOverlayClick} />}
-      {cartOpen && 
+      {isOpen.cartIsOpen && <Overlay id={`overlay`} onClick={handleOverlayClick} />}
+      {isOpen.cartIsOpen && 
         <div className={styles.modal} id="cart-modal">
           <div className="modal-header">
             <span id="closeModal" className={styles.close}>
               &times;
             </span>
           </div>
-          <div className="modal-body">
+          <div style={modalBody}>
             <Card className={styles['available-meals']}>
               <ul>{cartItem}</ul>
             </Card>
           </div>
           <div className="modal-footer">
+            <div>
+              <p>{totalPrice.totalPrice}</p>
+            </div>
             <div>
               <Button>Close</Button>
               <Button>Order</Button>

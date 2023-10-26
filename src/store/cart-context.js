@@ -6,10 +6,23 @@ export const CartProvider = (props) => {
   const [cartItems, setCartItems] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [scaleCart, setScaleCart] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [cartIsOpen, setCartIsOpen] = useState(false);
 
+
+  useEffect(()=>{
+    
+  // const calTotalPrice = () => {
+  //   const totalPrice = cartItems.reduce((acc,curr)=>{
+  //     console.log(curr.quantity,curr.price)
+  //     return acc + (curr.quantity*curr.price)
+  //   },0);
+  //   setTotalPrice(totalPrice);
+  // }
+
+  },[totalItems,cartIsOpen])
   useEffect(() => {
     if (cartItems.length > 0) {
-      console.log(cartItems);
       const calculateTotalItems = () => {
         return cartItems.reduce((accumulator, currentItem) => {
           return accumulator + parseInt(currentItem.quantity);
@@ -31,16 +44,17 @@ export const CartProvider = (props) => {
     };
   }, [scaleCart]);
 
+  const values = {
+        cart:{cartItems,setCartItems},
+        totalPrice:{totalPrice, setTotalPrice},
+        totalItems:totalItems,
+        scale:{ scaleCart, setScaleCart},
+        isOpen:{cartIsOpen, setCartIsOpen}
+  }
+
   return (
     <CartContext.Provider
-      value={{
-        cart: { cartItems, setCartItems },
-        totalItems,
-        scale: {
-          scaleCart,
-          setScaleCart,
-        },
-      }}
+      value={values}
     >
       {props.children}
     </CartContext.Provider>

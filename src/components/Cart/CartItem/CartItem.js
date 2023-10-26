@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import styles from "./CartItem.module.css";
 import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
@@ -8,10 +8,13 @@ export const CartItem = (props) => {
 
   const handleIncrementItem = () => {
     cart.setCartItems((prevState) => {
+      console.log(prevState)
       const meal = cart.cartItems.find((meal) => meal.id === props.id);
       if (meal !== undefined) {
+        
         return prevState.map((item) => {
           if (item.id === props.id) {
+            console.log()
             return {
               ...item,
               quantity: item.quantity + 1,
@@ -21,6 +24,7 @@ export const CartItem = (props) => {
         });
       }
     });
+    cart.calTotalPrice();
   };
   const handleDecrementItem = () => {};
   // const reducer = (state, action) => {
