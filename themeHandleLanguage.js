@@ -1,67 +1,71 @@
-
 const languageToggleCheckbox = document.getElementById("language-toggle");
-let currentLocale = localStorage.getItem("locale");
-const langURLInAsset = "{{lang_asset_url}}";
+			const currentLocale = localStorage.getItem("locale");
+			const storedLang = localStorage.getItem("lang");
+			const langFetchTime = localStorage.getItem("langFetchTime");
+			const langURLInAsset = "{{lang_asset_url}}";
 
-const checkFileIsUpdated = async (langURLInAsset) => {
-	const response = await fetch(langURLInAsset, { method: 'HEAD' });
-    const serverTimestamp = response.headers.get('last-modified');
-	
+			const langFileIsModified =  (lastModifiedLang) => {
+				const result = new Date(langFetchTime).getTime() !== new Date(lastModifiedLang).getTime()
+				 return result
+			}
+			const setMultiLangToLocalStorage = new Promise((resolve, reject) => {
+          fetch(langURLInAsset)
+					.then((response) => {
+						if (response.ok) {
+							resolve({
+								lang:response.json(),
+								lastModified: response.headers.get('last-modified')
+							});
+						} else {
+							reject("Failed to fetch lang json");
+						}
+					})
+					.catch((error) => {
+						reject(error)
+					});
+			});
+		
+			const setLocaleToLocalStorage = () => {
+				localStorage.setItem("locale", "vi");
+			};
+			const handleLanguageToggleClick = () => {
+				if (languageToggleCheckbox.checked) {
+					localStorage.setItem("locale", "vi");
+				} else {
+					languageToggleCheckbox.checked = false;
+					localStorage.setItem("locale", "en");
+				}
+			};
+      const getLastModifiedLang = new Promise((resolve, reject) => {
+        fetch(langURLInAsset, { method: 'HEAD' })
+        .then(response => {
+          const lastModifiedLang = response.headers.get('last-modified')
+          resolve(lastModifiedLang)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+			//check "locale" and "lang" key in localStorage
+			const validLocaleAndLangFromLocalStorage = new Promise((resolve,reject) => {
+        if (!currentLocale){
+          setLocaleToLocalStorage();
+        }
+        getLastModifiedLang
+        .then(data => resolve(data))
+        .catch(error => reject(error))
+			});
+			validLocaleAndLangFromLocalStorage
+      .then(lastModifiedLang => {
+          if (!langFetchTime || !storedLang || langFileIsModified(lastModifiedLang)){
+              return setMultiLangToLocalStorage;
+          }
+      })
+      .then(response => {
+        response.lang.then(lang => {
+                localStorage.setItem("lang", JSON.stringify(lang));
+                localStorage.setItem("langFetchTime", response.lastModified);
+              })
+      });
+			languageToggleCheckbox.addEventListener("change", handleLanguageToggleClick);
 
-}
-//check "locale" and "lang" key in localStorage
-const validLocaleAndLangFromLocalStorage = () => {
-  const storedLocale = localStorage.getItem("locale");
-  const storedLang = localStorage.getItem("lang");
-  if (!storedLocale && !storedLang) {
-    setMultiLangToLocalStorage();
-    setLocaleToLocalStorage();
-  } else if (!storedLocale) {
-    setLocaleToLocalStorage();
-  } else {
-    setMultiLangToLocalStorage();
-  }
-};
-const getMultiLangFromAsset = (assetURL) => {
-  return fetch(assetURL)
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Failed to fetch lang json");
-      }
-    })
-    .catch((error) => {
-      console.log("Error:", error);
-      return null;
-    });
-};
-const setMultiLangToLocalStorage = () => {
-  getMultiLangFromAsset(langURLInAsset)
-    .then((multiLang) => {
-      if (multiLang) {
-        localStorage.setItem("lang", JSON.stringify(multiLang));
-      }
-    })
-    .catch((error) => {
-      console.log("Error:", error);
-    });
-};
-const setLocaleToLocalStorage = () => {
-  localStorage.setItem("locale", "vi");
-};
-const handleLanguageToggleClick = () => {
-  if (languageToggleCheckbox.checked) {
-    localStorage.setItem("locale", "vi");
-  } else {
-    localStorage.setItem("locale", "en");
-  }
-};
 
-
-
-if (currentLocale === "en") {
-  languageToggleCheckbox.checked = false;
-}
-validLocaleAndLangFromLocalStorage();
-languageToggleCheckbox.addEventListener("change", handleLanguageToggleClick);
