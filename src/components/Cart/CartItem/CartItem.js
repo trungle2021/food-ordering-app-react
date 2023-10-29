@@ -4,17 +4,14 @@ import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
 import { CartContext } from "../../../store/cart-context";
 export const CartItem = (props) => {
-  const { cart } = useContext(CartContext);
+  const { cart, totalItems } = useContext(CartContext);
 
   const handleIncrementItem = () => {
     cart.setCartItems((prevState) => {
-      console.log(prevState)
       const meal = cart.cartItems.find((meal) => meal.id === props.id);
       if (meal !== undefined) {
-        
         return prevState.map((item) => {
           if (item.id === props.id) {
-            console.log()
             return {
               ...item,
               quantity: item.quantity + 1,
@@ -24,45 +21,29 @@ export const CartItem = (props) => {
         });
       }
     });
-    cart.calTotalPrice();
   };
-  const handleDecrementItem = () => {};
-  // const reducer = (state, action) => {
-  //   let meal = cart.cartItems.find((meal) => meal.id === props.id);
-  //   console.log(meal);
-  //   if (!meal) {
-  //     console.log("not found item");
-  //     return;
-  //   }
-  //   switch (action) {
-  //     case "INCREMENT":
-  //       cart.setCartItems((prevState) => {
-  //         return prevState.map((meal) => {
-  //           if (meal.id === props.id) {
-  //             return {
-  //               ...meal,
-  //               quantity: parseInt(state) + 1,
-  //             };
-  //           }
-  //           return meal;
-  //         });
-  //       });
-  //       break;
-  //     case "DECREMENT":
-  //       cart.setCartItems((prevState) => {
-  //         return prevState.map((meal) => {
-  //           return {
-  //             ...meal,
-  //             quantity: parseInt(state) - 1,
-  //           };
-  //         });
-  //       });
-  //       break;
-  //     default:
-  //       throw new Error("Action Invalid");
-  //   }
-  // };
-  // const [quantityItem, dispatchQuantity] = useReducer(reducer, props.quantity);
+  const handleDecrementItem = () => {
+    if (props.quantity === 1) {
+      const pos = cart.cartItems.findIndex((item) => item.id === props.id);
+      console.log(pos);
+      return;
+    }
+    cart.setCartItems((prevState) => {
+      const meal = cart.cartItems.find((meal) => meal.id === props.id);
+      if (meal !== undefined) {
+        return prevState.map((item) => {
+          if (item.id === props.id) {
+            return {
+              ...item,
+              quantity: item.quantity - 1,
+            };
+          }
+          return item;
+        });
+      }
+    });
+  };
+
   return (
     <>
       <li className={styles["meal-item"]}>
